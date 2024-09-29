@@ -70,6 +70,7 @@ export const protect = catchAsync(async (req,res,next)=>{
         return next(new AppError("No token provided"));
       }
       const decoded = jwt.verify(token,process.env.SECRET_KEY);
+      
       req.user = decoded;
       next();
     }
