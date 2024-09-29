@@ -5,6 +5,7 @@ import dotnev from "dotenv";
 import globalErrors from "./controller/errorController.js";
 import authRoutes from "./routes/useRoute.js";
 import campaignRoutes from "./routes/campaignsRoute.js";
+import donationRoutes from "./routes/donationRoute.js";
 import compression from "compression";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
@@ -29,8 +30,9 @@ const limiter = rateLimit({
 });
 // routes
 app.use("/",limiter);
-app.use("/api/v1",authRoutes);
-app.use("/api/v1",campaignRoutes);
+app.use("/api/v1/",authRoutes);
+app.use("/api/v1/campaigns",campaignRoutes);
+app.use("/api/v1/donations",donationRoutes);
 
 
 app.use(globalErrors);

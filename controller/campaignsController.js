@@ -60,7 +60,7 @@ export const getSingleCampaign = catchAsync(async(req,res,next)=>{
 })
 
 export const createCampaign = catchAsync(async (req, res, next) => {
-  const { title, description, targetAmount, currentAmount, deadline } = req.body;
+  const { title, description, targetAmount, currentAmount, deadline,startDate,endDate } = req.body;
 
   const newCampaign = await prisma.campaign.create({
     data: {
@@ -69,7 +69,9 @@ export const createCampaign = catchAsync(async (req, res, next) => {
       currentAmount,
       deadline,
       targetAmount,
-      userId:req?.user?.id
+      userId:req?.user?.id,
+      startDate,
+      endDate
     },
   });
 
