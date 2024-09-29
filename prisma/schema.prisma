@@ -12,3 +12,42 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id         Int       @id @default(autoincrement())
+  username   String    @unique
+  email      String    @unique
+  password   String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  Campaign Campaign[]
+
+  Donation Donation[]
+}
+
+model Campaign {
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String @db.Text
+  targetAmount Float
+  currentAmount Float
+  deadline    DateTime
+  userId      Int
+  startDate DateTime
+  endDate DateTime
+  user        User    @relation(fields:[userId], references:[id])
+  donations   Donation[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Donation {
+  id           Int     @id @default(autoincrement())
+  amount       Float
+  userId       Int
+  user         User    @relation(fields:[userId], references:[id])
+  campaignId   Int
+  campaign     Campaign @relation(fields:[campaignId], references:[id])
+  createdAt    DateTime @default(now())
+}
